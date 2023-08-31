@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBWireframesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TEventos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Visto" Type="bit" />
+          <Property Name="Imagen" Type="image" />
+        </EntityType>
+        <EntityType Name="TImagen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imagen" Type="image" />
+          <Property Name="ID_Evento" Type="int" />
+        </EntityType>
+        <EntityType Name="TTicket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="text" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Silla" Type="varchar(max)" />
+          <Property Name="ID_Evento" Type="int" />
+        </EntityType>
+        <Association Name="FK_TImagen_TEventos">
+          <End Role="TEventos" Type="Self.TEventos" Multiplicity="0..1" />
+          <End Role="TImagen" Type="Self.TImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEventos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TImagen">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TTicket_TEventos">
+          <End Role="TEventos" Type="Self.TEventos" Multiplicity="0..1" />
+          <End Role="TTicket" Type="Self.TTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEventos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TTicket">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBWireframesModelStoreContainer">
+          <EntitySet Name="TEventos" EntityType="Self.TEventos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TImagen" EntityType="Self.TImagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TTicket" EntityType="Self.TTicket" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TImagen_TEventos" Association="Self.FK_TImagen_TEventos">
+            <End Role="TEventos" EntitySet="TEventos" />
+            <End Role="TImagen" EntitySet="TImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TTicket_TEventos" Association="Self.FK_TTicket_TEventos">
+            <End Role="TEventos" EntitySet="TEventos" />
+            <End Role="TTicket" EntitySet="TTicket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBWireframesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TImagen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID_Evento" Type="Int32" />
+          <NavigationProperty Name="TEventos" Relationship="DBWireframesModel.FK_TImagen_TEventos" FromRole="TImagen" ToRole="TEventos" />
+        </EntityType>
+        <EntityType Name="TTicket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Silla" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Evento" Type="Int32" />
+          <NavigationProperty Name="TEventos" Relationship="DBWireframesModel.FK_TTicket_TEventos" FromRole="TTicket" ToRole="TEventos" />
+        </EntityType>
+        <EntityContainer Name="DBWireframesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TImagen" EntityType="Self.TImagen" />
+          <EntitySet Name="TTicket" EntityType="Self.TTicket" />
+          <EntitySet Name="TEventos" EntityType="DBWireframesModel.TEventos" />
+          <AssociationSet Name="FK_TImagen_TEventos" Association="DBWireframesModel.FK_TImagen_TEventos">
+            <End Role="TEventos" EntitySet="TEventos" />
+            <End Role="TImagen" EntitySet="TImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TTicket_TEventos" Association="DBWireframesModel.FK_TTicket_TEventos">
+            <End Role="TEventos" EntitySet="TEventos" />
+            <End Role="TTicket" EntitySet="TTicket" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="TEventos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Visto" Type="Boolean" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="TImagen" Relationship="DBWireframesModel.FK_TImagen_TEventos" FromRole="TEventos" ToRole="TImagen" />
+          <NavigationProperty Name="TTicket" Relationship="DBWireframesModel.FK_TTicket_TEventos" FromRole="TEventos" ToRole="TTicket" />
+        </EntityType>
+        <Association Name="FK_TImagen_TEventos">
+          <End Type="DBWireframesModel.TEventos" Role="TEventos" Multiplicity="0..1" />
+          <End Type="DBWireframesModel.TImagen" Role="TImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEventos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TImagen">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TTicket_TEventos">
+          <End Type="DBWireframesModel.TEventos" Role="TEventos" Multiplicity="0..1" />
+          <End Type="DBWireframesModel.TTicket" Role="TTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEventos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TTicket">
+              <PropertyRef Name="ID_Evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBWireframesModelStoreContainer" CdmEntityContainer="DBWireframesEntities">
+          <EntitySetMapping Name="TImagen">
+            <EntityTypeMapping TypeName="DBWireframesModel.TImagen">
+              <MappingFragment StoreEntitySet="TImagen">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="ID_Evento" ColumnName="ID_Evento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TTicket">
+            <EntityTypeMapping TypeName="DBWireframesModel.TTicket">
+              <MappingFragment StoreEntitySet="TTicket">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Silla" ColumnName="Silla" />
+                <ScalarProperty Name="ID_Evento" ColumnName="ID_Evento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEventos">
+            <EntityTypeMapping TypeName="DBWireframesModel.TEventos">
+              <MappingFragment StoreEntitySet="TEventos">
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Visto" ColumnName="Visto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

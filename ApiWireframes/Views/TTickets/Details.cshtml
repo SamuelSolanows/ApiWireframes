@@ -1,0 +1,50 @@
+﻿@model ApiWireframes.Models.TTicket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TTicket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Silla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Silla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEventos.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEventos.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
