@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using ApiWireframes.Models;
 using ApiWireframes.Models.view;
+using Microsoft.Ajax.Utilities;
 
 namespace ApiWireframes.Controllers
 {
@@ -37,6 +38,27 @@ namespace ApiWireframes.Controllers
 
             }).ToList());
         }
+        [Route("api/sapo/{id}")]
+        public IHttpActionResult GetTTicket2(int id)
+        {
+            return Ok(db.TTicket.ToList().Select(x => new Tickets()
+            {
+                User_Name = x.User_Name,
+                Silla = x.Silla,
+                Fecha = x.Fecha.Value,
+                ID = x.ID,
+                ID_Evento = x.ID_Evento.Value,
+                eventos = new Eventos()
+                {
+                    Nombre = x.TEventos.Nombre,
+                    Descripcion = x.TEventos.Descripcion,
+                    Visto = x.TEventos.Visto.Value
+                }
+
+
+            }).ToList());
+        }
+
 
 
         // GET: api/TTickets/5
